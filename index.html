@@ -22,11 +22,14 @@
         }).then(function(data) {
             const addons = Object.values(data).sort((a, b) => a.addon_name.localeCompare(b.addon_name));
             for(const addon of addons) {
-                list.push(m("div", {"class": "row"}, [
+                let items = [
                     m("a", {href: addon.website, target: "_blank"}, [m("h3", addon.addon_name) ]),
                     m("h5", addon.developer),
                     m("p", addon.description)
-                ]));
+                ];
+                if(addon.version_id_is_human_readable)
+                    items.splice(2, 0, m("strong", "Version: " + addon.version_id));
+                list.push(m("div", {"class": "row"}, items));
             }
 
             m.render(root, list);
