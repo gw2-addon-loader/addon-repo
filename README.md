@@ -12,3 +12,7 @@ A template file can be found here, as well as existing folders displaying what a
 ### How to Add Your Addon
 
 Submit a PR where you add a folder with the name of your addon (preferably in relatively short and basic form, e.g. `gw2radial` or `arcdps_bhud`) with a completed `update.yaml` file within. See the `d912pxy` example as a rough guideline.
+
+### Usage
+
+If you'd like to use this curated list for your own purposes, you can use the [landing page](https://gw2-addon-loader.github.io/addon-repo/) or the [master JSON file](https://gw2-addon-loader.github.io/addon-repo/addons.json). The JSON file is updated hourly.

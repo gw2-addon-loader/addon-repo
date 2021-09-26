@@ -14,10 +14,12 @@ let addons = {};
 async function insert_github(addon) {
     const { data } = await axios.get(addon.host_url, { auth: { username: username, password: token } });
     addon.version_id = data.tag_name;
+    addon.version_id_is_human_readable = true;
     addon.download_url = data.assets[0].browser_download_url;
 }
 
 async function insert_standalone(addon) {
+    addon.version_id_is_human_readable = false;
     if (addon.version_url != null) {
         const { data } = await axios.get(addon.version_url, { responseType: 'text', transitional: { forcedJSONParsing: false } });
         addon.version_id = data;
