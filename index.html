@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>GW2 Addons Repository</title>
+        <script src="https://unpkg.com/mithril/mithril.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <div class="container">
+            <h1>GW2 Addons Repository</h1>
+            <p>This page was automatically generated. For more details, please head to the <a href="https://github.com/gw2-addon-loader/addon-repo">main repository</a>.</p>
+            <div class="container" id="addons-list"></div>
+        </div>
+        <script>
+        var root = document.getElementById("addons-list");
+        var list = [];
+
+        m.request({
+            method: "GET",
+            url: "addons.json",
+        }).then(function(data) {
+            const addons = Object.values(data).sort((a, b) => a.addon_name.localeCompare(b.addon_name));
+            for(const addon of addons) {
+                list.push(m("div", {"class": "row"}, [
+                    m("a", {href: addon.website, target: "_blank"}, [m("h3", addon.addon_name) ]),
+                    m("h5", addon.developer),
+                    m("p", addon.description)
+                ]));
+            }
+
+            m.render(root, list);
+        });
+
+        </script>
+    </body>
+</html>
