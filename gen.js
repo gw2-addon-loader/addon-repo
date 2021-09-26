@@ -49,3 +49,4 @@ try {
 } catch { }
 
 await fsp.writeFile(dirname + "/.build/addons.json", JSON.stringify(addons), "utf-8");
+await fsp.copyFile(dirname + "/index.html", dirname + "/.build/index.html");
