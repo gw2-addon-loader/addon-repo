@@ -27,6 +27,12 @@ version_url: https://www.deltaconnected.com/arcdps/x64/d3d9.dll.md5sum
 download_type: .dll
 # binary or d3d9 - binary leaves plugin name as-is, d3d9 means filename may be changed for chainloading
 install_mode: binary
+# list of files created by the addon - used to clean up on deletion for arc and its addons
+files:
+  - arcdps.ini
+  - arcdps_imgui.ini
+  - arcdps.log
+  - arcdps_lastcrash.log
 
 ### CONFIGURATION ###
 # a list of all other add-ons required for this add-on to function

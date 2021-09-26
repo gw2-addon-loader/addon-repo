@@ -32,6 +32,7 @@ async function add_addon(name, file) {
 
     try {
         let yaml = YAML.parse(file);
+        yaml.nickname = name;
 
         try {
             if (yaml.host_type === 'github')

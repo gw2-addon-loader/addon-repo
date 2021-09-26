@@ -29,6 +29,8 @@ download_type: .dll
 install_mode: arc
 #
 plugin_name: d3d9_arcdps_killproof_me.dll
+# list of files created by the addon - used to clean up on deletion for arc and its addons
+files:
 
 ### CONFIGURATION ###
 # a list of all other add-ons required for this add-on to function

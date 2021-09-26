@@ -24,11 +24,13 @@ host_url: https://api.github.com/repos/knoxfighter/GW2-ArcDPS-Boon-Table/release
 # for md5sum files and things of that nature; files that exist solely to show what the latest version is. Standalone only.
 version_url:
 # archive or .dll
-download_type: .dll
+download_type: .dlls
 # binary or d3d9 - binary leaves plugin name as-is, d3d9 means filename may be changed for chainloading
 install_mode: arc
 #
-plugin_name: d3d9_arcdps_boontable.dll
+plugin_name: arcdps_boontable.dll
+# list of files created by the addon - used to clean up on deletion for arc and its addons
+files:
 
 ### CONFIGURATION ###
 # a list of all other add-ons required for this add-on to function

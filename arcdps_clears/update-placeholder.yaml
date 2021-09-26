@@ -22,13 +22,15 @@ host_type: github
 # latter is a direct download link to a file/archive
 host_url: https://api.github.com/repos/gw2scratch/arcdps-clears/releases/latest
 # for md5sum files and things of that nature; files that exist solely to show what the latest version is. Standalone only.
-version_url: 
+version_url:
 # archive or .dll
 download_type: .dll
 # binary or d3d9 - binary leaves plugin name as-is, d3d9 means filename may be changed for chainloading
 install_mode: arc
 # plugin name- only for arc-dependent plugins
 plugin_name: arcdps_clears.dll
+# list of files created by the addon - used to clean up on deletion for arc and its addons
+files:
 
 ### CONFIGURATION ###
 # a list of all other add-ons required for this add-on to function
