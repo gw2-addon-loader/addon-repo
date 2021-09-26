@@ -1,0 +1,23 @@
+{
+  "name": "approved-addons",
+  "version": "0.0.1",
+  "description": "A list of approved addons compatible with the GW2 Addon Manager and GW2 Addon Loader.",
+  "main": "gen.js",
+  "type": "module",
+  "scripts": {
+    "gen": "node gen.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gw2-addon-loader/Approved-Addons.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gw2-addon-loader/Approved-Addons/issues"
+  },
+  "homepage": "https://github.com/gw2-addon-loader/Approved-Addons#readme",
+  "dependencies": {
+    "yaml": "^1.10.2"
+  }
+}
