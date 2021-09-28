@@ -19,9 +19,24 @@
         m.request({
             method: "GET",
             url: "addons.json",
-        }).then(function(data) {
-            const addons = Object.values(data).sort((a, b) => a.addon_name.localeCompare(b.addon_name));
-            for(const addon of addons) {
+        }).then(function({ addons, manager, loader }) {
+
+            list.push(m("div", {"class": "row"}, [
+                m("a", {href: loader.website, target: "_blank"}, [m("h3", loader.name) ]),
+                m("h5", loader.developer),
+                m("strong", "Version: " + loader.loader_version_id)
+            ]));
+
+            list.push(m("div", {"class": "row"}, [
+                m("a", {href: manager.website, target: "_blank"}, [m("h3", manager.name) ]),
+                m("h5", manager.developer),
+                m("strong", "Version: " + manager.version_id)
+            ]));
+
+            list.push(m("hr"));
+
+            const addonsList = Object.values(addons).sort((a, b) => a.addon_name.localeCompare(b.addon_name));
+            for(const addon of addonsList) {
                 let items = [
                     m("a", {href: addon.website, target: "_blank"}, [m("h3", addon.addon_name) ]),
                     m("h5", addon.developer),

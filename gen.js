@@ -9,6 +9,31 @@ const dirname = path.dirname(process.argv[1]);
 const username = process.argv[2];
 const token = process.argv[3];
 
+async function fetch_addon_loader() {
+    const { data } = await axios.get("https://api.github.com/repos/gw2-addon-loader/loader-core/releases/latest", { auth: { username: username, password: token } });
+    const { data: data2 } = await axios.get("https://api.github.com/repos/gw2-addon-loader/d3d9_wrapper/releases/latest", { auth: { username: username, password: token } });
+    return {
+        name: "Addon Loader",
+        developer: "megai2",
+        website: "https://github.com/gw2-addon-loader/loader-core",
+        loader_version_id: data.tag_name,
+        loader_download_url: data.assets[0].browser_download_url,
+        wrapper_version_id: data2.tag_name,
+        wrapper_download_url: data2.assets[0].browser_download_url
+    };
+}
+
+async function fetch_addon_manager() {
+    const { data } = await axios.get("https://api.github.com/repos/gw2-addon-loader/GW2-Addon-Manager/releases/latest", { auth: { username: username, password: token } });
+    return {
+        name: "GW2 Unofficial Addon Manager",
+        developer: "FriendlyFire",
+        website: "https://github.com/gw2-addon-loader/GW2-Addon-Manager",
+        version_id: data.tag_name,
+        download_url: data.assets[0].browser_download_url
+    };
+}
+
 let addons = {};
 
 async function insert_github(addon) {
@@ -79,9 +104,16 @@ for (const file of files) {
 
 console.log("Found " + Object.keys(addons).length + " addons.");
 
+const addon_loader = await fetch_addon_loader();
+const addon_manager = await fetch_addon_manager();
+
 try {
     await fsp.mkdir(dirname + "/.build");
 } catch { }
 
-await fsp.writeFile(dirname + "/.build/addons.json", JSON.stringify(addons), "utf-8");
+await fsp.writeFile(dirname + "/.build/addons.json", JSON.stringify({
+    "addons": addons,
+    "loader": addon_loader,
+    "manager": addon_manager
+}), "utf-8");
 await fsp.copyFile(dirname + "/index.html", dirname + "/.build/index.html");
