@@ -11,15 +11,13 @@ const token = process.argv[3];
 
 async function fetch_addon_loader() {
     const { data } = await axios.get("https://api.github.com/repos/gw2-addon-loader/loader-core/releases/latest", { auth: { username: username, password: token } });
-    const { data: data2 } = await axios.get("https://api.github.com/repos/gw2-addon-loader/d3d9_wrapper/releases/latest", { auth: { username: username, password: token } });
     return {
         name: "Addon Loader",
         developer: "megai2",
         website: "https://github.com/gw2-addon-loader/loader-core",
-        loader_version_id: data.tag_name,
-        loader_download_url: data.assets[0].browser_download_url,
-        wrapper_version_id: data2.tag_name,
-        wrapper_download_url: data2.assets[0].browser_download_url
+        version_id: data.tag_name,
+        download_url: data.assets[0].browser_download_url,
+        wrapper_nickname: "d3d9_wrapper"
     };
 }
 
