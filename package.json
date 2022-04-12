@@ -19,7 +19,7 @@
   "homepage": "https://github.com/gw2-addon-loader/Approved-Addons#readme",
   "dependencies": {
     "axios": "^0.23.0",
-    "yaml": "^1.10.2"
+    "yaml": "^2.0.0"
   },
   "devDependencies": {}
 }
