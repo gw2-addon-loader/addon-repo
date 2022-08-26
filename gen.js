@@ -9,30 +9,40 @@ const dirname = path.dirname(process.argv[1]);
 const username = process.argv[2];
 const token = process.argv[3];
 
+let { addons, loader, manager } = (await axios.get("https://gw2-addon-loader.github.io/addon-repo/addons.json")).data;
+
 async function fetch_addon_loader() {
-    const { data } = await axios.get("https://api.github.com/repos/gw2-addon-loader/loader-core/releases/latest", { auth: { username: username, password: token } });
-    return {
-        name: "Addon Loader",
-        developer: "megai2",
-        website: "https://github.com/gw2-addon-loader/loader-core",
-        version_id: data.tag_name,
-        download_url: data.assets[0].browser_download_url,
-        wrapper_nickname: "d3d9_wrapper"
-    };
+    try {
+        const { data } = await axios.get("https://api.github.com/repos/gw2-addon-loader/loader-core/releases/latest", { auth: { username: username, password: token } });
+        return {
+            name: "Addon Loader",
+            developer: "megai2",
+            website: "https://github.com/gw2-addon-loader/loader-core",
+            version_id: data.tag_name,
+            download_url: data.assets[0].browser_download_url,
+            wrapper_nickname: "d3d9_wrapper"
+        };
+    } catch (ex) {
+        console.log("Error: Could not successfully fetch version information for addon loader: " + ex);
+        return loader;
+    }
 }
 
 async function fetch_addon_manager() {
-    const { data } = await axios.get("https://api.github.com/repos/gw2-addon-loader/GW2-Addon-Manager/releases/latest", { auth: { username: username, password: token } });
-    return {
-        name: "GW2 Unofficial Addon Manager",
-        developer: "FriendlyFire",
-        website: "https://github.com/gw2-addon-loader/GW2-Addon-Manager",
-        version_id: data.tag_name,
-        download_url: data.assets[0].browser_download_url
-    };
+    try {
+        const { data } = await axios.get("https://api.github.com/repos/gw2-addon-loader/GW2-Addon-Manager/releases/latest", { auth: { username: username, password: token } });
+        return {
+            name: "GW2 Unofficial Addon Manager",
+            developer: "FriendlyFire",
+            website: "https://github.com/gw2-addon-loader/GW2-Addon-Manager",
+            version_id: data.tag_name,
+            download_url: data.assets[0].browser_download_url
+        };
+    } catch (ex) {
+        console.log("Error: Could not successfully fetch version information for addon manager: " + ex);
+        return manager;
+    }
 }
-
-let addons = {};
 
 async function insert_github(addon) {
     const { data } = await axios.get(addon.host_url, { auth: { username: username, password: token } });
@@ -56,17 +66,18 @@ async function add_addon(name, file) {
     try {
         let yaml = YAML.parse(file);
         yaml.nickname = name;
+        yaml.fetch_time = Date.now();
 
         try {
             if (yaml.host_type === 'github')
                 await insert_github(yaml);
             else if (yaml.host_type === 'standalone')
                 await insert_standalone(yaml);
+
+            addons[name] = yaml;
         } catch (ex) {
             console.log("Error: Could not successfully fetch version information for addon '" + name + "': " + ex);
         }
-        addons[name] = yaml;
-
     } catch (ex) {
         console.log("Error: Could not successfully parse YAML for addon '" + name + "': " + ex);
     }
